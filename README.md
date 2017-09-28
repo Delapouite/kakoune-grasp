@@ -2,23 +2,44 @@
 
 [kakoune](http://kakoune.org) plugin to work with [grasp](http://www.graspjs.com/), the JavaScript AST query engine.
 
+## Purpose
+
+Kakoune already offers a lot of primitives to select portions of text :
+simple keys (`w`), text-objects (like `<a-i>b`) or more complex regex crafting (`s`).
+
+Grasp is a tool that transforms a JavaScript source file into a queryable Abstract Syntax Tree.
+This way you can very easily ask for the location of all the `if (cond) { statements… }` blocks in the code:
+
+```
+grasp if <file>
+```
+
+Please refer to [grasp's documentation](http://www.graspjs.com/docs/) for further info about available queries.
+
+This plugin lets you type grasp queries right from Kakoune's command line to quickly select all the bits you need:
+arrays, booleans, arrow functions…
+
 ## Install
 
 Add `grasp.kak` to your autoload dir: `~/.config/kak/autoload/`.
 
 ## Usage
 
-It provides the following commands:
+It provides the following command: `grasp <engine> <mode> <query>`
 
-- `grasp-e`: select all using grasp equery - i.e. the `function __ (__) { __ }` query will select all functions with a 1 expression body
-- `grasp-s`: select all using grasp squery - i.e. the `if.test` query will select the content of all `()` following if conditions
+- `<engine>` is `e` for equery or `s` for squery.
+- `<mode>` is `all` which selects all occurrences of the buffer, or `main` which only selects what you asked only
+- if it seats right under your main cursor (i.e. if you are inside a function body and query `func` it will only
+select this specific function).
+- `<query>` is passed to grasp. Use the autocompletion menu to guide you for common queries.
 
-These variations only select if there is an intersection with the current main selection:
+Command aliases are also available:
 
+- `grasp-e`
+- `grasp-s`
 - `grasp-e-main`
 - `grasp-s-main`
 
-Please refer to [grasp's documentation](http://www.graspjs.com/docs/) for further info.
 
 ## See also
 

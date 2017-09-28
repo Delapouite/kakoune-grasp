@@ -1,13 +1,31 @@
+
+# Aliases
+
+def grasp-e %{ exec ':grasp e all ' } -docstring 'select all using grasp equery'
+def grasp-s %{ exec ':grasp s all ' } -docstring 'select all using grasp squery'
+def grasp-e-main %{ exec ':grasp e main ' } -docstring 'select only main using grasp equery'
+def grasp-s-main %{ exec ':grasp s main ' } -docstring 'select only main using grasp squery'
+
+# Implementation
+
 # first arg: s or e
 #  query engine
 # second arg: all or main
 #  select all or only the one which intersects with current main selection
-def grasp -params 2 -hidden %{
-  prompt "grasp %arg{1}" %{
+# third arg: (can use candidates completions)
+#  query
+
+def grasp -params 3 \
+  -docstring "grasp <engine> <mode> <query>
+  <engine>: e or s
+  <mode>: all or main" \
+  -shell-candidates %{
+    grasp --help syntax | head -n -2 | tail -n +11 | awk '/./{ print $1 }' | sed -e 's/literal-//'
+  } %{
     %sh{
       {
         # clean grasp output
-        coords=$(grasp -$1 -b --no-bold --no-color --no-multiline-separator "$kak_text" "$kak_buffile" \
+        coords=$(grasp -$1 -b --no-bold --no-color --no-multiline-separator "$3" "$kak_buffile" \
           | awk 'match($0, /^([0-9]+),([0-9]+)-([0-9]+),([0-9]+)/, m) { print m[1]"."m[2]+1","m[3]"."m[4]+1 }' | paste -sd ':' -)
 
         if [ $2 = 'main' ]; then
@@ -39,8 +57,3 @@ def grasp -params 2 -hidden %{
     }
   }
 }
-
-def grasp-e 'grasp e all' -docstring 'select all using grasp equery'
-def grasp-s 'grasp s all' -docstring 'select all using grasp squery'
-def grasp-e-main 'grasp e main' -docstring 'select only main using grasp equery'
-def grasp-s-main 'grasp s main' -docstring 'select only main using grasp squery'
