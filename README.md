@@ -10,8 +10,13 @@ Add `grasp.kak` to your autoload dir: `~/.config/kak/autoload/`.
 
 It provides the following commands:
 
-- `grasp-e`: select using grasp equery - i.e. the `function __ (__) { __ }` query will select all functions with a 1 expression body
-- `grasp-s`: select using grasp squery - i.e. the `if.test` query will select the content of all `()` following if conditions
+- `grasp-e`: select all using grasp equery - i.e. the `function __ (__) { __ }` query will select all functions with a 1 expression body
+- `grasp-s`: select all using grasp squery - i.e. the `if.test` query will select the content of all `()` following if conditions
+
+These variations only select if there is an intersection with the current main selection:
+
+- `grasp-e-main`
+- `grasp-s-main`
 
 Please refer to [grasp's documentation](http://www.graspjs.com/docs/) for further info.
 
