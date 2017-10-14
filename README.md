@@ -40,6 +40,34 @@ Command aliases are also available:
 - `grasp-e-main`
 - `grasp-s-main`
 
+The `mode-grasp` command opens an info waiting for your next key:
+
+```
+a: array
+A: array elements
+b: block
+c: call
+e: else
+f: func decl
+F: func expr
+i: if
+I: if then
+j: jsx element
+J: jsx attr
+k: key
+l: lambda
+m: method
+o: object
+O: object props
+t: ternary
+r: return
+v: value
+
+# Suggested mappings
+
+map global normal <a-g> ':mode-grasp main<ret>' -docstring 'grasp s main'
+map global normal <a-G> ':mode-grasp all<ret>' -docstring 'grasp s all'
+```
 
 ## See also
 

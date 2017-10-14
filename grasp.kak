@@ -21,7 +21,8 @@ def grasp -params 3 \
   <mode>: all or main" \
   -shell-candidates %{
     grasp --help syntax | head -n -2 | tail -n +11 | awk '/./{ print $1 }' | sed -e 's/literal-//'
-  } %{
+  } \
+  %{
     %sh{
       {
         # clean grasp output
@@ -56,4 +57,57 @@ def grasp -params 3 \
       } < /dev/null > /dev/null 2>&1 &
     }
   }
+
+def -hidden mode-grasp -params 1 %{
+  info -title %sh{[ $1 = all ] && echo "'grasp all'" || echo "'grasp main'" } \
+%{a: array
+A: array elements
+b: block
+c: call
+e: else
+f: func decl
+F: func expr
+i: if
+I: if then
+j: jsx element
+J: jsx attr
+k: key
+l: lambda
+m: method
+o: object
+O: object props
+t: ternary
+r: return
+v: value}
+  on-key %{ %sh{
+    cmd="grasp s $1"
+    case "$kak_key" in
+      a) echo $cmd arr ;;
+      A) echo $cmd arr.elements ;;
+      b) echo $cmd block ;;
+      c) echo $cmd call ;;
+      e) echo $cmd if.else ;;
+      f) echo $cmd func-dec ;;
+      F) echo $cmd func-expr ;;
+      i) echo $cmd if ;;
+      I) echo $cmd if.then ;;
+      j) echo $cmd jsx-element ;;
+      J) echo $cmd jsx-attr ;;
+      k) echo $cmd prop.key ;;
+      l) echo $cmd arrow ;;
+      m) echo $cmd method ;;
+      o) echo $cmd obj ;;
+      O) echo $cmd obj.properties ;;
+      t) echo $cmd cond ;;
+      r) echo $cmd return ;;
+      v) echo $cmd prop.value ;;
+      # info hides the previous one
+      *) echo info; esc=true ;;
+    esac
+  }}
 }
+
+# Suggested mappings
+
+#map global normal <a-g> ':mode-grasp main<ret>' -docstring 'grasp s main'
+#map global normal <a-G> ':mode-grasp all<ret>' -docstring 'grasp s all'
