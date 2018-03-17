@@ -1,3 +1,12 @@
+# Prerequisites
+
+%sh{
+  for dep in grasp; do
+    if ! command -v $dep > /dev/null 2>&1; then
+      echo "echo -debug %{Dependency unmet: $dep, please install it with npm}"
+    fi
+  done
+}
 
 # Aliases
 
