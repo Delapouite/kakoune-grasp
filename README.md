@@ -71,6 +71,7 @@ map global normal <a-G> ':mode-grasp all<ret>' -docstring 'grasp s all'
 
 ## See also
 
+- [kak-tree](https://github.com/ul/kak-tree)
 - [eslint-formatter-kakoune](https://github.com/Delapouite/eslint-formatter-kakoune)
 - [kakoune-flow](https://github.com/Delapouite/kakoune-flow)
 - [kakoune-ecmascript](https://github.com/Delapouite/kakoune-ecmascript)
